@@ -1,0 +1,15 @@
+{% extends 'catalog/index.html' %}
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Зарегестрироваться">
+</form>
+
+<a href="{% url 'catalog:login' %}">Back to login</a>
+{% endblock %}

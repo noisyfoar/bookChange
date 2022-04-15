@@ -1,0 +1,32 @@
+{% extends 'catalog/index.html' %}
+
+{% block title %} {{ book.title }} {% endblock %}
+
+{% block content %}
+<h1>asd</h1>
+<div class="page">
+      <div class="card">
+        <img src="{{MEDIA_URL}}{{ book.image.url}}" alt="1984" style="width: 100%" />
+        <h1>{{ book.title }} {{ book.author }}</h1>
+        <p class="title">
+          {% for g in book.genre.all %} {{ g.genreName }}, {% endfor %}
+        </p>
+        <p>
+          {{book.summary}}
+        </p>
+        <form action="{% url 'messenger:create_dialog' user_id=book.owner_id book_id=book.id  %}"><button>Написать владельцу книги</button></form>
+        <form action="{% url 'catalog:profile' book.owner_id %}"><button>Владелец книги</button></form>
+      </div>
+      {% for review in book.review.all %}
+      <div class="blok2">
+        <h2>Отзывы</h2>
+        <div class="card2">
+          <p class="name">{{review.critic.name}}</p>
+          <p>
+            {{review.text}}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}
