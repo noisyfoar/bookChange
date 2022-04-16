@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from catalog.models import Book
 
+
 # Во-первых чаты могут быть двух видов. Первый - это личная беседа двух человек. Второй вид - это коллективый чат. Реализован только диалог, чат будет потом но кирпичик уже сделан
 class Chat(models.Model):
     DIALOG = 'D'
@@ -11,8 +12,13 @@ class Chat(models.Model):
     CHAT_TYPE_CHOICES = ((DIALOG, 'Dialog'), (CHAT, 'Chat'))
 
     type = models.CharField('Тип', max_length=1, choices=CHAT_TYPE_CHOICES, default=DIALOG)
-    book = models.OneToOneField(Book, on_delete=models.SET_NULL, null=True)
+
     members = models.ManyToManyField(User)
+
+    book = models.OneToOneField(Book, on_delete=models.SET_NULL, null=True)
+
+    trade_owner = models.BooleanField(default=False)
+    trade_customer = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Чат'

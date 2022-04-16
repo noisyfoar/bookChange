@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ru">
   <head>
+      <link rel="shortcut icon" href="/media/img/icon/icon.gif" type="image/gif">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,6 +60,31 @@
 .title {
         color: grey;
         font-size: 18px;
+      }
+.container_trade {
+        align-self: flex-start;
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px 0;
+      }
+
+      /* Clear floats */
+      .container_trade::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      /* Style images */
+      .container_trade img {
+        float: left;
+        max-width: 100px;
+        width: 100%;
+        height: 100%;
+        margin-right: 20px;
+        border-radius: 10%;
       }
 
 .container_book {
@@ -142,7 +168,24 @@
             font-size: 18px;
             border-radius: 10px;
       }
-
+        .trade_button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: rgb(17, 17, 17);
+        background-color: rgb(73, 68, 107);
+        text-align: center;
+        cursor: pointer;
+        width: 50%;
+        font-weight: 600;
+        font-size: 18px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 250px;
+        margin-top: 10px;
+        border-radius: 10px;
+        float: right;
+      }
 
 
         button:hover, a:hover {

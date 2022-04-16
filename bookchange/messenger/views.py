@@ -2,7 +2,7 @@ from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from .models import Chat
+from .models import *
 from .forms import MessageForm
 from catalog.models import Book, BookOfMonth
 from django.db.models.functions import datetime
@@ -44,13 +44,31 @@ class MessagesView(View):
                        'book_of_month': get_book_of_month()})
 
     def post(self, request, chat_id):
-        form = MessageForm(data=request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.chat_id = chat_id
-            message.author = request.user
-            message.save()
-        return redirect(reverse('messenger:dialog', kwargs={'chat_id': chat_id}))
+        if 'message' in request.POST:
+            form = MessageForm(data=request.POST)
+            if form.is_valid():
+                message = form.save(commit=False)
+                message.chat_id = chat_id
+                message.author = request.user
+                message.save()
+            return redirect(reverse('messenger:dialog', kwargs={'chat_id': chat_id}))
+        else:
+            chat = Chat.objects.get(id=chat_id)
+            book = Book.objects.get(chat=chat)
+            owner = book.owner
+            if owner == request.user:
+                chat.trade_owner = not chat.trade_owner
+            else:
+                chat.trade_customer = not chat.trade_customer
+            if chat.trade_customer and chat.trade_owner:
+                book.owner = chat.members.exclude(id=owner.id).first()
+                book.save()
+                message = Message.objects.create(chat=chat, author=owner, message="Обмен произошел. Новый владелец:" + book.owner)
+                message.save()
+                chat.trade_owner = not chat.trade_owner
+                chat.trade_customer = not chat.trade_customer
+            chat.save()
+            return redirect(reverse('messenger:dialog', kwargs={'chat_id': chat_id}))
 
 
 # На данный момент реализован лишь один метод для начала беседы с пользователем. Необходимо перейти на страницу

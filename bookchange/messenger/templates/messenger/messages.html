@@ -9,7 +9,20 @@
     {% else %}
         {% load tz %}
         {% if chat %}
-            {% include 'catalog/book-item.html' with book_item=chat.book %}
+            <div class="container_trade">
+          <div class="text">
+                <img src="{{MEDIA_URL}}{{ chat.book.image.url}}" alt="bookPuc"/>
+                <p class="book_name"><a href="{% url 'catalog:book' chat.book.id %}">{{ chat.book.title }}</a></p>
+                <p class="book_author">Автор: {{ chat.book.author }}</p>
+                <p class="book_genre"> Жанры:{% for g in chat.book.genre.all %}
+                                    {{ g.genreName }}
+                                {% endfor %}</p>
+            </div>
+                <form id="trade-form" method = "post" name="trade">
+                    {% csrf_token %}
+                    <button class="trade_button">Обменяться</button>
+                </form>
+        </div>
             <div id="messages" class="panel">
                 <div id="innerMessages">
                     {% for message in chat.message_set.all %}
@@ -19,11 +32,11 @@
             </div>
         {% endif %}
         <div id="footer">
-            <form id="message-form" class="form-control col-8 col-sm-9 col-md-8" method="post">
+            <form id="message-form" class="form-control col-8 col-sm-9 col-md-8" method="post" name="message">
 
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                <button type="submit" class="btn btn-secondary col-4 col-sm-3 col-md-4" onclick="return ETextEditor.validateForm('message-form')"><span class="ico ico-comment"></span>Отправить</button>
+                <button type="submit" onclick="return ETextEditor.validateForm('message-form')"><span class="ico ico-comment"></span>Отправить</button>
             </form>
         </div>
     {% endif %}

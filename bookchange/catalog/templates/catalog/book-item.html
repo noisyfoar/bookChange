@@ -2,8 +2,7 @@
                 <img src="{{MEDIA_URL}}{{ book_item.image.url}}" alt="bookPuc"/>
                 <p class="book_name"><a href="{% url 'catalog:book' book_item.id %}">{{ book_item.title }}</a></p>
                 <p class="book_author">Автор: {{ book_item.author }}</p>
-                <p class="book_genre"> {% for g in book_item.genre.all %}
+                <p class="book_genre"> Жанры:{% for g in book_item.genre.all %}
                                     {{ g.genreName }}
-                                    {% if not loop.last %} , {% endif %}
                                 {% endfor %}</p>
             </div>

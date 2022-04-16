@@ -49,10 +49,13 @@ class RegistrationView(CreateView):
     template_name = "catalog/reg.html"
 
 
-class BookCreateView(LoginRequiredMixin, CreateView):
+class BookCreateView(CreateView):
     model = Book
     fields = ['title', 'author', 'summary', 'genre', 'image']
     success_url = '/book/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.id
