@@ -83,3 +83,8 @@ class BookOfMonth(models.Model):
         verbose_name = 'Книга месяца'
         verbose_name_plural = 'Книги месяца'
         ordering = ['dayOfBook']
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='img/profiles', blank=True)

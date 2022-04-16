@@ -10,7 +10,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 def profile(request, pk):
     user = User.objects.get(id=pk)
     books = Book.objects.filter(owner_id=pk)
-    return render(request, 'catalog/profile.html', {'user': user, 'books': books, 'book_of_month': get_book_of_month()})
+    try:
+        profile = Profile.objects.get(user_id=pk)
+        profile = profile.image.url
+    except Profile.DoesNotExist:
+        profile = "/media/img/profiles/default.jpg"
+
+    return render(request, 'catalog/profile.html',
+                  {'user': user, 'books': books, 'book_of_month': get_book_of_month(), 'profile': profile})
 
 
 class AddBookView(View):
@@ -43,7 +50,7 @@ class RegistrationView(CreateView):
 
 class BookCreate(CreateView):
     model = Book
-    fields = ['title', 'author', 'summmary', 'genre', 'image']
+    fields = ['title', 'author', 'summary', 'genre', 'image']
 
 
 class BookUpdate(UpdateView):
