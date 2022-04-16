@@ -1,7 +1,5 @@
 {% extends 'catalog/index.html' %}
-
 {% block title %} Книга:{{ book.title }} {% endblock %}
-
 {% block content %}
 <div class="page">
       <div class="card">
@@ -13,8 +11,8 @@
         <p>
           {{book.summary}}
         </p>
-        <form action="{% url 'messenger:create_dialog' user_id=book.owner_id book_id=book.id  %}"><button>Написать владельцу книги</button></form>
-        <form action="{% url 'catalog:profile' book.owner_id %}"><button>Владелец книги</button></form>
+        <form action="{% url 'messenger:create_dialog' user_id=book.owner_id book_id=book.id  %}"><button class="form_button">Написать владельцу книги</button></form>
+        <form action="{% url 'catalog:profile' book.owner_id %}"><button class="form_button">Владелец книги</button></form>
       </div>
       {% for review in book.review.all %}
       <div class="blok2">

@@ -1,10 +1,7 @@
 {% extends "catalog/index.html" %}
 {% load bootstrap3 %}
-{% block title %}
-Диалог
-{% endblock %}
-
-  {% block content %}
+{% block title %}   Диалог   {% endblock %}
+{% block content %}
     {% if not chat %}
         <div class="panel panel-body">
             Невозможно начать беседу.

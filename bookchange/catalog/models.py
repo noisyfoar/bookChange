@@ -47,12 +47,12 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField('Название книги', max_length=50)
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, verbose_name='Автор книги')
     summary = models.TextField('Краткое описание', max_length=1000, help_text="Опишите кратко книгу",
                                default=' ', blank=True)
-    genre = models.ManyToManyField(Genre, help_text="Выберите жанр(ы) книги", blank=True)
+    genre = models.ManyToManyField(Genre, blank=True, verbose_name='Жанры книги')
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to='img/books', blank=True)
+    image = models.ImageField(upload_to='img/books', blank=True, verbose_name='Фотография книги')
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -70,7 +70,7 @@ class Book(models.Model):
 class BookOfMonth(models.Model):
     title = models.CharField('Название книги', max_length=50)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    summary = models.TextField('Краткое описание', max_length=1000, help_text="Опишите кратко книгу",
+    summary = models.TextField('Краткое описание', max_length=1000,
                                default=' ')
     dayOfBook = models.DateField('Месяц книги')
 
@@ -87,8 +87,8 @@ class BookOfMonth(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='img/profiles', blank=True)
+    image = models.ImageField(upload_to='img/profiles', blank=True, verbose_name='Ваш аватар')
+    genre = models.ManyToManyField(Genre, blank=True, verbose_name='Любимые жанры')
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': str(self.id)})
-

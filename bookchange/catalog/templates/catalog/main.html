@@ -2,7 +2,8 @@
 {% block title %}
 Главная страница
 {% endblock %}
-
 {% block content %}
-    {% for book in books %}{% include 'catalog/book-item.html' with book_item=book %}{%endfor%}
+    {% for book in books %}
+        {% include 'catalog/book-item.html' with book_item=book %}
+    {%endfor%}
 {% endblock %}

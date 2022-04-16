@@ -61,7 +61,7 @@ class BookCreateView(LoginRequiredMixin, CreateView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = '__all__'
+    fields = ['title', 'author', 'summary', 'genre', 'image']
     success_url = '/book/'
 
 
@@ -84,4 +84,16 @@ class AuthorUpdateView(UpdateView):
 
 class AuthorDeleteView(DeleteView):
     model = Author
+    success_url = '/'
+
+
+class ProfileCreateView(CreateView):
+    model = Profile
+    fields = ['image', 'genre']
+    success_url = '/'
+
+
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    fields = ['image', 'genre']
     success_url = '/'
