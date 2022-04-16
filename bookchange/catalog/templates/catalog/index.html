@@ -143,24 +143,7 @@
             border-radius: 10px;
       }
 
-        button_profile {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: rgb(17, 17, 17);
-        background-color: grey;
-        text-align: center;
-        cursor: pointer;
-        width: 50%;
-        font-weight: 600;
-        font-size: 18px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        max-width: 281px;
-        margin-left: 11.80%;
-        margin-top: 10px;
-        border-radius: 10px;
-      }
+
 
         button:hover, a:hover {
             opacity: 0.7;
@@ -230,7 +213,8 @@
               <form>
                 <div class="card">
                     <img src="{{MEDIA_URL}}{{ book_of_month.image.url}}" alt="1984" style="width:100%">
-                    <h1>{{book_of_month.title}} {{book_of_month.author}}</h1>
+                    <h1>{{book_of_month.title}}</h1>
+                    <h2>{{book_of_month.author}}</h2>
                     <p class="title_card">{% for g in book_of_month.genre.all %} {{ g.genreName }}, {% endfor %}</p>
                     <p>{{book_of_month.summary}}</p>
                 </div>

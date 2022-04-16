@@ -1,17 +1,18 @@
 {% extends "catalog/index.html" %}
+{% load bootstrap3 %}
 {% block title %}
-Мессенджер
+Диалог
 {% endblock %}
 
   {% block content %}
     {% if not chat %}
         <div class="panel panel-body">
-            Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе.
+            Невозможно начать беседу.
         </div>
     {% else %}
         {% load tz %}
         {% if chat %}
-            {% include 'catalog/book-item.html' book_item = chat.book%}
+            {% include 'catalog/book-item.html' with book_item=chat.book %}
             <div id="messages" class="panel">
                 <div id="innerMessages">
                     {% for message in chat.message_set.all %}
@@ -21,8 +22,8 @@
             </div>
         {% endif %}
         <div id="footer">
-            <form id="message-form" class="form-control col-8 col-sm-9 col-md-8" method="post"  placeholder="Введите сообщение">
-                {% load bootstrap3 %}
+            <form id="message-form" class="form-control col-8 col-sm-9 col-md-8" method="post">
+
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <button type="submit" class="btn btn-secondary col-4 col-sm-3 col-md-4" onclick="return ETextEditor.validateForm('message-form')"><span class="ico ico-comment"></span>Отправить</button>

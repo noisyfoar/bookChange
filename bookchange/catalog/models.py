@@ -88,3 +88,7 @@ class BookOfMonth(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='img/profiles', blank=True)
+
+    def get_absolute_url(self):
+        return reverse('profile', kwargs={'pk': str(self.id)})
+

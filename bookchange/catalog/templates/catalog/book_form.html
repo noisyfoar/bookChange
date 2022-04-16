@@ -1,8 +1,7 @@
 {% extends "catalog/index.html" %}
-
+{% block title %} Форма добавления книги {% endblock %}
 {% block content %}
-
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
     {{ form.as_table }}
@@ -10,4 +9,5 @@
     <input type="submit" value="Добавить свою книгу для обмена" />
 
 </form>
+Нет подходящего автора?  <a href="{% url 'catalog:addAuthor'%}" class="text-danger">Добавить автора</a>
 {% endblock %}
