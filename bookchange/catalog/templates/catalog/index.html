@@ -19,6 +19,20 @@
     max-width: 500px;
     margin: auto;
 }
+        .container_message::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+.container_message img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
         .darker {
     border-color: #ccc;
     background-color: #ddd;
@@ -227,7 +241,92 @@ border-radius: 10px;
           font-weight:600;
           width:100%;
       }
+      h2 {
+        text-align: center;
+      }
+      .page_userProfile {
+        display: flex;
+        justify-content: space-between;
+      }
+      .card_userProfile {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        margin: auto;
+        text-align: center;
+        padding: 10px;
+        background: white;
+        border-radius: 5px;
+        margin-left: 30px;
+      }
 
+      .card2_userProfile {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin: auto;
+        text-align: center;
+        padding: 10px;
+        background: white;
+        border-radius: 5px;
+        margin-right: 30px;
+        margin-left: 20px;
+      }
+
+      .blok2_userProfile {
+        margin-right: 30px;
+        margin-left: 20px;
+      }
+
+      .title_userProfile {
+        color: grey;
+        font-size: 18px;
+      }
+
+      button_userProfile {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: rgb(17, 17, 17);
+        background-color: rgb(115, 105, 177);
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-weight: 500;
+        font-size: 18px;
+        border-radius: 10px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+
+      button_userProfile:hover,
+      a:hover {
+        opacity: 0.7;
+      }
+
+      body {
+        background: rgb(152, 202, 202);
+      }
+
+      .name_userProfile {
+        text-align: left;
+        font-weight: 700;
+      }
+      .book_name_userProfile {
+        text-align: left;
+      }
+      .card_userProfile img {
+        float: center;
+        max-width: 1000px;
+        width: 100%;
+        height: 100%;
+      }
+      .knopki_userProfile {
+        display: flex;
+        justify-content: space-evenly;
+      }
     </style>
 
 

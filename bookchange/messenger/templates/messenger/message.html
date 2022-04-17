@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 {% load tz %}
     <div class="container_message{% if not message_item.author == user %} darker {% endif %}">
-        <a href="{% url 'catalog:profile' message_item.author_id%}"><img class="rounded-circle" src="{{ message_item.author.profile.image }}"></a>
+        <a href="{% url 'catalog:profile' message_item.author_id%}"><img class="rounded-circle" src="{{MEDIA_URL}}{{ message_item.author.profile.image.url }}"></a>
         <div class="reply-body">
             <ul class="list-inline">
                 <li class="drop-left-padding">

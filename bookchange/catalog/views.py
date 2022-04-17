@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.db.models.functions import datetime
 from django.shortcuts import render
 from django.views import View
+
 from .models import *
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -16,19 +17,15 @@ def get_book_of_month():
 def profile(request, pk):
     user = User.objects.get(id=pk)
     books = Book.objects.filter(owner_id=pk)
-    try:
-        profile = Profile.objects.get(user_id=pk)
-        profile = profile.image.url
-    except Profile.DoesNotExist:
-        profile = "/media/img/profiles/default.jpg"
-
-    return render(request, 'catalog/profile.html',
-                  {'user': user, 'books': books, 'book_of_month': get_book_of_month(), 'profile': profile})
-
-
-class AddBookView(View):
-    def get(self, request):
-        return render(request, 'catalog/addBook.html', {'book_of_month': get_book_of_month()})
+    prof = Profile.objects.get(user_id=pk)
+    accord = {}
+    for b in books:
+        q = (b.genre.all() & user.profile.genre.all()).count()
+        accord[b] = q
+    sorted_tuples = sorted(accord.items(), key=lambda item: item[1])
+    accord = {k: v for k, v in sorted_tuples}
+    return render(request, 'catalog/profile_of_user.html',
+                  {'user': user, 'books': books, 'book_of_month': get_book_of_month(), 'profile': prof})
 
 
 class MainListView(View):
@@ -52,10 +49,7 @@ class RegistrationView(CreateView):
 class BookCreateView(CreateView):
     model = Book
     fields = ['title', 'author', 'summary', 'genre', 'image']
-    success_url = '/book/'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    success_url = '/book/' + str(model.id)
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.id
@@ -65,7 +59,7 @@ class BookCreateView(CreateView):
 class BookUpdateView(UpdateView):
     model = Book
     fields = ['title', 'author', 'summary', 'genre', 'image']
-    success_url = '/book/'
+    success_url = '/book/' + str(model.id)
 
 
 class BookDeleteView(DeleteView):

@@ -1,5 +1,5 @@
 {% extends 'catalog/index.html' %}
-{% block title %}Книга: {{ book.title }}{% endblock %}
+{% block title %}Профиль {{user.username}}{% endblock %}
   {% block content %}
 <div class="page_userProfile">
       <div class="card_userProfile">
@@ -24,7 +24,6 @@
           </div>
         </div>
         <h2>Отзывы</h2>
-        {% if review %}
         {% for review in book.review.all %}
         <div class="card2_userProfile">
           <p class="name_userProfile">{{review.critic.name}}</p>
@@ -33,9 +32,6 @@
           </p>
         </div>
         {% endfor %}
-        {% else %}
-        <p>Никто ещё не написал свою рецензию</p>
-        {% endif %}
       </div>
     </div>
 {% endblock %}

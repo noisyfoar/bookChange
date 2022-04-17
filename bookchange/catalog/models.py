@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -16,7 +18,7 @@ class Genre(models.Model):
 
 
 class Review(models.Model):
-    critic = models.ForeignKey(User, help_text='Имя критика', on_delete=models.SET_NULL, null=True)
+    critic = models.ForeignKey(User, help_text='Имя критика', on_delete=models.CASCADE, null=True)
     rating = models.IntegerField('Рейтинг книги', blank=True)
     text = models.TextField('Отзыв', max_length=1000)
 
@@ -48,11 +50,10 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField('Название книги', max_length=50)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, verbose_name='Автор книги')
-    summary = models.TextField('Краткое описание', max_length=1000, help_text="Опишите кратко книгу",
-                               default=' ', blank=True)
+    summary = models.TextField('Краткое описание', max_length=1000, default=' ', blank=True)
     genre = models.ManyToManyField(Genre, blank=True, verbose_name='Жанры книги')
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to='img/books', blank=True, verbose_name='Фотография книги')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='img/books/default.webp', upload_to='img/books', blank=True, verbose_name='Фотография книги')
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -87,8 +88,20 @@ class BookOfMonth(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='img/profiles', blank=True, verbose_name='Ваш аватар')
+    image = models.ImageField(default='img/profiles/default.jpg', upload_to='img/profiles', blank=True,
+                              verbose_name='Ваш аватар')
     genre = models.ManyToManyField(Genre, blank=True, verbose_name='Любимые жанры')
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': str(self.id)})
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

@@ -15,7 +15,7 @@ class Chat(models.Model):
 
     members = models.ManyToManyField(User)
 
-    book = models.OneToOneField(Book, on_delete=models.SET_NULL, null=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     trade_owner = models.BooleanField(default=False)
     trade_customer = models.BooleanField(default=False)

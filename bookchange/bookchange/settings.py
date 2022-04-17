@@ -70,6 +70,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_PROFILE_MODULE = 'accounts.Profile'
+
 WSGI_APPLICATION = 'bookchange.wsgi.application'
 
 

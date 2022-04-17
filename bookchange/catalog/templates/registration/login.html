@@ -1,7 +1,7 @@
 {% extends "catalog/index.html" %}
 
 {% block content %}
-
+<div class="form_form">
 {% if form.errors %}
   <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
 {% endif %}
@@ -34,5 +34,6 @@
 <input type="hidden" name="next" value="{{ next }}" />
   У вас нет аккаунта?  <a href="{% url 'catalog:reg'%}" class="text-danger">Зарегестрироваться</a>
 </form>
+  </div>
 
 {% endblock %}
