@@ -36,6 +36,7 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
 
     def get_absolute_url(self):
+        # noinspection PyUnresolvedReferences
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
@@ -60,6 +61,7 @@ class Book(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        # noinspection PyUnresolvedReferences
         return reverse('book', kwargs={'pk': str(self.id)})
 
     class Meta:
@@ -93,12 +95,14 @@ class Profile(models.Model):
     genre = models.ManyToManyField(Genre, blank=True, verbose_name='Любимые жанры')
 
     def get_absolute_url(self):
+        # noinspection PyUnresolvedReferences
         return reverse('profile', kwargs={'pk': str(self.id)})
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
+        # noinspection PyUnresolvedReferences
         Profile.objects.create(user=instance)
 
 

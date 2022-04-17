@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
+# noinspection PyUnresolvedReferences
 from catalog.models import Book
 
 
@@ -25,9 +26,11 @@ class Chat(models.Model):
         verbose_name_plural = 'Чаты'
 
     def get_absolute_url(self):
+        # noinspection PyUnresolvedReferences
         return reverse('messenger-message', args=[str(self.id)])
 
     def __str__(self):
+        # noinspection PyUnresolvedReferences
         return str(self.id)
 
 

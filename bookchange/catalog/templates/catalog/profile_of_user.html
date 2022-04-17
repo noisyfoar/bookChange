@@ -118,7 +118,9 @@
             <img src="{{MEDIA_URL}}{{ profile.image.url }}"
                  style="width: 100%"/>
             <h1>{{user.username}} </h1>
-            <div class="button_profile"><a href="{% url 'catalog:updateProfile' user.id %}">Изменить фото</a></div>
+            {% if request.user.id == profile.user.id %}
+            <form action="{% url 'catalog:updateProfile' request.user.id %}"><button class="form_button">Изменить информацию о себе</button></form>
+            {% endif %}
         </div>
 
         <div class="container_book">

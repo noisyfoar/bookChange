@@ -9,6 +9,12 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
+def get_preferred_sorted_books(user, books):
+    not_sorted_tuples = tuple(((b.genre.all() & user.profile.genre.all()).count(), b) for b in books)
+    sorted_tuple = sorted(not_sorted_tuples, key=lambda item: item[0], reverse=True)
+    return [x[1] for x in sorted_tuple]
+
+
 def get_book_of_month():
     today = datetime.datetime.now()
     return BookOfMonth.objects.get(dayOfBook__year=today.year, dayOfBook__month=today.month)
@@ -18,26 +24,26 @@ def profile(request, pk):
     user = User.objects.get(id=pk)
     books = Book.objects.filter(owner_id=pk)
     prof = Profile.objects.get(user_id=pk)
-    accord = {}
-    for b in books:
-        q = (b.genre.all() & user.profile.genre.all()).count()
-        accord[b] = q
-    sorted_tuples = sorted(accord.items(), key=lambda item: item[1])
-    accord = {k: v for k, v in sorted_tuples}
     return render(request, 'catalog/profile_of_user.html',
-                  {'user': user, 'books': books, 'book_of_month': get_book_of_month(), 'profile': prof})
+                  {'user': user,
+                   'books': books,
+                   'book_of_month': get_book_of_month(),
+                   'profile': prof})
 
 
 class MainListView(View):
     def get(self, request):
         books = Book.objects.exclude(owner_id=request.user.id)
         return render(request, 'catalog/main.html',
-                      {'books': books, 'user.id': request.user.id, 'book_of_month': get_book_of_month()})
+                      {'books': get_preferred_sorted_books(request.user, books),
+                       'user.id': request.user.id,
+                       'book_of_month': get_book_of_month()})
 
 
 def book(request, pk):
     book = Book.objects.get(id=pk)
-    return render(request, 'catalog/book.html', {'book': book, 'book_of_month': get_book_of_month()})
+    return render(request, 'catalog/book.html', {'book': book,
+                                                 'book_of_month': get_book_of_month()})
 
 
 class RegistrationView(CreateView):

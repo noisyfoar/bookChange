@@ -1,11 +1,11 @@
-from django.db.models import Count
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views import View
-from .models import *
-from .forms import MessageForm
 from catalog.models import Book, BookOfMonth
+from django.db.models import Count
 from django.db.models.functions import datetime
+from django.shortcuts import render, redirect
+from django.views import View
+
+from .forms import MessageForm
+from .models import *
 
 
 def get_book_of_month():

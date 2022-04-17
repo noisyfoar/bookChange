@@ -14,24 +14,23 @@
           <p>
             {{book.summary}}
           </p>
+          {% if request.user == book.owner %}
           <div class="knopki_userProfile">
-            <form action=""><button class="form_button">Написать владельцу книги</button></form>
-            <form action=""><button class="form_button">Владелец книги</button></form>
+            <form action="{% url 'catalog:updateBook' book.id %}"><button class="form_button">Изменить информацию о книге</button></form>
+            <form action="{% url 'catalog:deleteBook' book.id %}"><button class="form_button">Удалить книгу</button></form>
           </div>
+          {% else %}
           <div class="knopki_userProfile">
-            <form action=""><button class="form_button">Изменить информацию о книге</button></form>
-            <form action=""><button class="form_button">Удалить книгу</button></form>
+            <form action="{% url 'messenger:create_dialog' book.owner.id book.id %}"><button class="form_button">Написать владельцу книги</button></form>
+            <form action="{% url 'catalog:profile' book.owner.id %}"><button class="form_button">Владелец книги</button></form>
           </div>
+          {% endif %}
+          <form action="{% url 'catalog:deleteBook' book.id %}"><button class="form_button">Написать рецензию об этой книге</button></form>
         </div>
         <h2>Отзывы</h2>
-        {% if review %}
+        {% if book.review %}
         {% for review in book.review.all %}
-        <div class="card2_userProfile">
-          <p class="name_userProfile">{{review.critic.name}}</p>
-          <p>
-            {{review.text}}
-          </p>
-        </div>
+        {% include 'catalog/review-item.html' with review=review %}
         {% endfor %}
         {% else %}
         <p>Никто ещё не написал свою рецензию</p>
