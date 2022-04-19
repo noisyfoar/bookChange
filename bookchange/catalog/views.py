@@ -100,3 +100,25 @@ class ProfileUpdateView(UpdateView):
     model = Profile
     fields = ['image', 'genre']
     success_url = '/'
+
+
+class ReviewCreateView(CreateView):
+    model = Review
+    fields = ['text']
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.critic_id = self.request.user.id
+        form.instance.book_id = self.kwargs['pk']
+        return super().form_valid(form)
+
+
+class ReviewUpdateView(UpdateView):
+    model = Review
+    fields = ['text']
+    success_url = '/'
+
+
+class ReviewDeleteView(DeleteView):
+    model = Review
+    success_url = '/'

@@ -21,4 +21,8 @@ urlpatterns = [
     path('profile/<int:pk>', login_required(views.profile), name='profile'),
     path('profile/<int:pk>/update', login_required(views.ProfileUpdateView.as_view()), name='updateProfile'),
 
+    path('review/create/<int:pk>', login_required(views.ReviewCreateView.as_view()), name='addReview'),
+    path('review/<int:pk>/update', login_required(views.ReviewUpdateView.as_view()), name='updateReview'),
+    path('review/<int:pk>/delete', login_required(views.ReviewDeleteView.as_view()), name='deleteReview'),
+
 ]

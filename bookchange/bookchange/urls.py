@@ -7,4 +7,4 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', include(("catalog.urls", 'catalog'), namespace='catalog')),
                   path('', include(("messenger.urls", 'messenger'), namespace='messenger')),
-              ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

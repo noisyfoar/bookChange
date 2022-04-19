@@ -17,30 +17,15 @@ class Genre(models.Model):
         ordering = ['genreName']
 
 
-class Review(models.Model):
-    critic = models.ForeignKey(User, help_text='Имя критика', on_delete=models.CASCADE, null=True)
-    rating = models.IntegerField('Рейтинг книги', blank=True)
-    text = models.TextField('Отзыв', max_length=1000)
-
-    def __str__(self):
-        return self.text
-
-    class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
-        ordering = ['book']
-
-
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
     def get_absolute_url(self):
-        # noinspection PyUnresolvedReferences
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
-        return '%s, %s' % (self.last_name, self.first_name)
+        return '%s %s' % (self.first_name, self.last_name)
 
     class Meta:
         verbose_name = 'Автор'
@@ -49,13 +34,13 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField('Название книги', max_length=50)
+    title = models.CharField('Название книги', max_length=100)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, verbose_name='Автор книги')
     summary = models.TextField('Краткое описание', max_length=1000, default=' ', blank=True)
     genre = models.ManyToManyField(Genre, blank=True, verbose_name='Жанры книги')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='img/books/default.webp', upload_to='img/books', blank=True, verbose_name='Фотография книги')
-    review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True)
+    image = models.ImageField(default='img/books/default.webp', upload_to='img/books', blank=True,
+                              verbose_name='Фотография книги')
 
     def __str__(self):
         return self.title
@@ -68,6 +53,20 @@ class Book(models.Model):
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
         ordering = ['title']
+
+
+class Review(models.Model):
+    critic = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
+    text = models.TextField('Рецензия', max_length=1000)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        ordering = ['book']
 
 
 class BookOfMonth(models.Model):
@@ -92,7 +91,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='img/profiles/default.jpg', upload_to='img/profiles', blank=True,
                               verbose_name='Ваш аватар')
-    genre = models.ManyToManyField(Genre, blank=True, verbose_name='Любимые жанры')
+    genre = models.ManyToManyField(Genre, blank=True, verbose_name='Любимые жанры',
+                                   help_text="Удерживайте “Control“ (или “Command“ на Mac), чтобы выбрать несколько значений.")
 
     def get_absolute_url(self):
         # noinspection PyUnresolvedReferences

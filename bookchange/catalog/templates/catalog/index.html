@@ -8,6 +8,15 @@
      <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <style type="text/css">
+        .space{
+            position: fixed; left: 25%;
+            width: 1000px;
+        }
+        .space1{
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+      }
         .container_message {
     border: 2px solid #dedede;
     background-color: #f1f1f1;
@@ -251,12 +260,11 @@ border-radius: 10px;
       .card_userProfile {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         max-width: 500px;
-        margin: auto;
-        text-align: center;
+          text-align: center;
         padding: 10px;
         background: white;
         border-radius: 5px;
-        margin-left: 30px;
+          margin: auto auto auto 30px;
       }
 
       .card2_userProfile {
@@ -350,15 +358,13 @@ border-radius: 10px;
                 </li>
 
                 <li>
-              <a href="" class="nav-link small" data-bs-toggle="modal" data-bs-target="#exampleModal">Книга дня</a>
+              <a href="" class="nav-link small" data-bs-toggle="modal" data-bs-target="#exampleModal">Книга месяца</a>
             </li>
 
         </ul>
-            <form action="" class="d-flex">
+            <form action="m" class="">
 
-          <li>
                     <a href="{% url 'catalog:addBook'%}" class="nav-link small">Добавить книгу</a>
-                </li>
         </form>
         </div>
             {% endif %}
@@ -369,7 +375,7 @@ border-radius: 10px;
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Книга дня</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Книга месяца</h5>
           </div>
           <div class="modal-body">
             <div class="container-fluid">

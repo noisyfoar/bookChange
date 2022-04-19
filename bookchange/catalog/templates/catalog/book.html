@@ -25,11 +25,11 @@
             <form action="{% url 'catalog:profile' book.owner.id %}"><button class="form_button">Владелец книги</button></form>
           </div>
           {% endif %}
-          <form action="{% url 'catalog:deleteBook' book.id %}"><button class="form_button">Написать рецензию об этой книге</button></form>
+          <form action="{% url 'catalog:addReview' book.id %}"><button class="form_button">Написать рецензию об этой книге</button></form>
         </div>
         <h2>Отзывы</h2>
-        {% if book.review %}
-        {% for review in book.review.all %}
+        {% if book.reviews.all %}
+        {% for review in book.reviews.all %}
         {% include 'catalog/review-item.html' with review=review %}
         {% endfor %}
         {% else %}

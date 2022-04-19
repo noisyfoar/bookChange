@@ -26,7 +26,6 @@ class Chat(models.Model):
         verbose_name_plural = 'Чаты'
 
     def get_absolute_url(self):
-        # noinspection PyUnresolvedReferences
         return reverse('messenger-message', args=[str(self.id)])
 
     def __str__(self):
@@ -35,8 +34,8 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
-    chat = models.ForeignKey(Chat, on_delete=models.SET_NULL, null=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField("Message")
     pub_date = models.DateTimeField("Date", default=timezone.now)
     is_readed = models.BooleanField("Прочитано", default=False)

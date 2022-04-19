@@ -3,7 +3,10 @@
 Главная страница
 {% endblock %}
 {% block content %}
+<div class = "space">
     {% for book in books %}
         {% include 'catalog/book-item.html' with book_item=book %}
     {%endfor%}
+</div>
+
 {% endblock %}
