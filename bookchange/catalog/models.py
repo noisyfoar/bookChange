@@ -18,8 +18,8 @@ class Genre(models.Model):
 
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100,verbose_name='Имя автора')
+    last_name = models.CharField(max_length=100,verbose_name='Фамилия автора')
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])

@@ -30,7 +30,9 @@
         <h2>Отзывы</h2>
         {% if book.reviews.all %}
         {% for review in book.reviews.all %}
+        <div class="space1">
         {% include 'catalog/review-item.html' with review=review %}
+          </div>
         {% endfor %}
         {% else %}
         <p>Никто ещё не написал свою рецензию</p>

@@ -23,6 +23,18 @@
                     {% csrf_token %}
                     <button class="trade_button">Обменяться</button>
                 </form>
+                {% if chat.trade_owner == 1 %}
+                    <a>{{chat.book.owner.username}} предложил обмен</a>
+                {% endif %}
+                {% if chat.trade_customer == 1 %}
+                    {% for member in chat.members.all %}
+                        {% if member == chat.book.owner %}
+
+                        {% else %}
+                <a>{{member}} предложил обмен</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
         </div>
     </div>
             <div id="messages" class="panel">

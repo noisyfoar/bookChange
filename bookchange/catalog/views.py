@@ -55,7 +55,7 @@ class RegistrationView(CreateView):
 class BookCreateView(CreateView):
     model = Book
     fields = ['title', 'author', 'summary', 'genre', 'image']
-    success_url = '/book/' + str(model.id)
+    success_url = '/book/'
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.id
@@ -65,7 +65,7 @@ class BookCreateView(CreateView):
 class BookUpdateView(UpdateView):
     model = Book
     fields = ['title', 'author', 'summary', 'genre', 'image']
-    success_url = '/book/' + str(model.id)
+    success_url = '/book/'
 
 
 class BookDeleteView(DeleteView):

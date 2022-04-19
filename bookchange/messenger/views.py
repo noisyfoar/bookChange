@@ -63,7 +63,7 @@ class MessagesView(View):
             if chat.trade_customer and chat.trade_owner:
                 book.owner = chat.members.exclude(id=owner.id).first()
                 book.save()
-                message = Message.objects.create(chat=chat, author=owner, message="Обмен произошел. Новый владелец:" + book.owner)
+                message = Message.objects.create(chat=chat, author=owner, message="Обмен произошел. Новый владелец:" + book.owner.username)
                 message.save()
                 chat.trade_owner = not chat.trade_owner
                 chat.trade_customer = not chat.trade_customer
