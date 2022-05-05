@@ -15,7 +15,6 @@
                     {% with last_message=chat.message_set.last %}
                         {% get_companion user chat as companion %}
                         <a class="list-group-item {% if companion == last_message.author and not last_message.is_readed %}unreaded{% endif %}" href="{% url 'messenger:dialog' chat.id %}">
-                            <img class="rounded-circle" src="{{MEDIA_URL}}{{ companion.profile.image }}">
                             <div class="reply-body">
                                 <ul class="list-inline">
                                     <li class="drop-left-padding">
@@ -25,7 +24,6 @@
                                 </ul>
                                 {% if companion != last_message.author %}
                                     <div>
-                                        <img class="rounded-circle" src="{{MEDIA_URL}}{{ last_message.author.profile.image }}">
                                         <div class="attached-reply-body {% if not last_message.is_readed %}unreaded{% endif %}">{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
                                     </div>
                                 {% else %}
